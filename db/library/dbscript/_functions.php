@@ -103,29 +103,14 @@ function dbscript_error( $errno, $errstr, $errfile, $errline ) {
         if (environment('debug_enabled'))
           print "  Fatal error in line $errline of file $errfile<br />\n";
       }
-			$path = '/var/www/tweetiepic/logs/';
-			$file = $path.substr(  microtime(), 0, 7);
-			$fd = fopen($file , "a+");
 			global $request;
 			if (isset($request->uri))
 				$data = "ERROR ".serialize($errstr).' '.serialize($errfile).' '.serialize($errline)."   ".$request->uri."\n\n\n";
 			 else
 			$data = "ERROR ".serialize($errstr).' '.serialize($errfile).' '.serialize($errline)."   "."\n\n\n";
-			if ($fd) {
-				$result = fwrite( $fd, $data );
-			  fclose($fd);
-			}
       exit(1);
     case E_USER_WARNING:
-      //print "<b>WARNING</b> [$errno] $errstr<br />\n";
-			$path = '/var/www/tweetiepic/logs/';
-			$file = $path.substr(  microtime(), 0, 7);
-			$fd = fopen($file , "a+");
 			$data = "WARNING ".serialize($errstr).' '.serialize($errfile).' '.serialize($errline)."\n\n";
-			if ($fd) {
-				$result = fwrite( $fd, $data );
-			  fclose($fd);
-			}
 			break;
     case E_USER_NOTICE:
       print "<b>NOTICE</b> [$errno] $errstr<br />\n";

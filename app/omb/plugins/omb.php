@@ -209,9 +209,27 @@ function omb_filter_posts( &$model, &$db ) {
     );
     $model->set_param( 'find_by', $where );
   } elseif (environment('threaded') && in_array($request->action, array('index','get')) && $model->table == 'posts' && $request->resource == 'posts' && $request->id == 0) {
+
+  if (get_profile_id()) {
+
+    $model->has_many( 'profile_id:subscriptions.subscribed' );
+
+    $model->set_groupby( 'id' );
+
+    $where = array(
+      'op'=>'OR',
+      'profile_id'=>get_profile_id(),
+      'subscriptions.subscriber'=>get_profile_id()
+    );
+  
+  } else {
+
     $where = array(
       'parent_id'=>0
     );
+    
+  }
+  
     $model->set_param( 'find_by', $where );
   } elseif ($request->action == 'index' && $model->table == 'posts' && $request->resource == 'posts' && $request->id == 0) {
     $where = array(

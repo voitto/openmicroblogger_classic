@@ -353,6 +353,7 @@ function do_shorten_redirect(&$model,&$model) {
   global $request;
   if (!($model->table == 'settings'))
     return;
+  if (!pretty_urls()) return;
   $perma = parse_url( $_SERVER['REQUEST_URI'] );
   $_PERMA = explode( "/", $perma['path'] );
   @array_shift( $_PERMA );
