@@ -353,12 +353,15 @@ class Model {
 
     if ($revision){
 		  // save a revision
-		  $Revision =& $db->model('Revision');
-		  $r = $Revision->base();
-		  $r->set_value( 'data', serialize($rec) );
-		  $r->set_value( 'profile_id', get_profile_id() );
-		  $r->set_value( 'target_id', $rec->entry_id );
-		  $r->save();
+		  // buggy in PostgreSQL XXX
+		  if (!class_exists('PostgreSQL') ){
+  		  $Revision =& $db->model('Revision');
+  		  $r = $Revision->base();
+  		  $r->set_value( 'data', serialize($rec) );
+  		  $r->set_value( 'profile_id', get_profile_id() );
+  		  $r->set_value( 'target_id', $rec->entry_id );
+  		  $r->save();
+	    }
   	}
     
     foreach ( $fieldsarr as $field=>$type ) {
@@ -430,12 +433,15 @@ class Model {
 
     if ($revision){
 		  // save a revision
-		  $Revision =& $db->model('Revision');
-		  $r = $Revision->base();
-		  $r->set_value( 'data', serialize($rec) );
-		  $r->set_value( 'profile_id', get_profile_id() );
-		  $r->set_value( 'target_id', $rec->entry_id );
-		  $r->save();
+		  // buggy in PostgreSQL XXX
+		  if (!class_exists('PostgreSQL') ){
+  		  $Revision =& $db->model('Revision');
+  		  $r = $Revision->base();
+  		  $r->set_value( 'data', serialize($rec) );
+  		  $r->set_value( 'profile_id', get_profile_id() );
+  		  $r->set_value( 'target_id', $rec->entry_id );
+  		  $r->save();
+		  }
   	}
     
     if ($this->has_metadata) {

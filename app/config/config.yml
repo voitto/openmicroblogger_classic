@@ -16,7 +16,7 @@ development:
   database: test
   username: root
   password: 
-  host: localhost
+  host: localhost:/tmp/mysql.sock
 
 test:
   adapter: mysql

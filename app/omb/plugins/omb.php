@@ -195,7 +195,7 @@ function omb_filter_posts( &$model, &$db ) {
     $model->set_param( 'find_by', $where );
   } elseif (isset($request->params['forid']) && $request->resource == 'posts' && $model->table == 'posts'){
     $model->has_many( 'profile_id:subscriptions.subscribed' );
-    $model->set_groupby( 'id' );
+//    $model->set_groupby( 'id' );
     $where = array(
       'op'=>'OR',
       'profile_id'=>$request->params['forid'],
@@ -214,7 +214,7 @@ function omb_filter_posts( &$model, &$db ) {
 
     $model->has_many( 'profile_id:subscriptions.subscribed' );
 
-    $model->set_groupby( 'id' );
+//    $model->set_groupby( 'id' );
 
     $where = array(
       'op'=>'OR',
@@ -526,19 +526,22 @@ global $db;
 
   if (!$id) {
     // check for the nickname in a previous identity
-    $Revision =& $db->model('Revision');
-    $Revision->set_limit(1000);
-    $Revision->unset_relation('entries');
-    $Revision->has_one('target_id:entries.id');
-    $where = array(
-      'entries.resource'=>'identities'
-    );
-    $Revision->set_param( 'find_by', $where );
-    $Revision->find();
-    while ($r = $Revision->MoveNext()) {
-      $i = mb_unserialize($r->data);
-      if (is_object($i) && $nick == $i->nickname)
-        $id = $i->id;
+    // buggy in PostgreSQL XXX
+    if (!class_exists('PostgreSQL') ){
+      $Revision =& $db->model('Revision');
+      $Revision->set_limit(1000);
+      $Revision->unset_relation('entries');
+      $Revision->has_one('target_id:entries.id');
+      $where = array(
+        'entries.resource'=>'identities'
+      );
+      $Revision->set_param( 'find_by', $where );
+      $Revision->find();
+      while ($r = $Revision->MoveNext()) {
+        $i = mb_unserialize($r->data);
+        if (is_object($i) && $nick == $i->nickname)
+          $id = $i->id;
+      }
     }
   }
   
