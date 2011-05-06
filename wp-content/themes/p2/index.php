@@ -131,6 +131,7 @@ if( have_posts( ) ) {
 	global $the_author;
 	global $the_post;
 ?>
+<?php if (!empty($the_author->profile_url)) $the_author->profile = $the_author->profile_url; ?>
 
 <hr />
 
@@ -138,7 +139,7 @@ if( have_posts( ) ) {
 <?php continue; ?>
 <?php if (!isset($request->params['byid'])) : ?>	
 <span class="tweet_avatar">
-	<a href="<?php echo $the_author->profile_url; ?>">
+	<a href="<?php echo $the_author->profile; ?>">
 	  <img src="<?php echo $the_author->avatar; ?>" height="48" width="48" border="0">
 	</a>
 </span>
@@ -146,7 +147,7 @@ if( have_posts( ) ) {
 <span class="tweet_content">
 	<?php if (!isset($request->params['byid'])) : ?>	
 	<strong>
-		<a href="<?php echo $the_author->profile_url; ?>" title="<?php echo $the_author->name; ?>"><?php echo $the_author->nickname; ?></a>
+		<a href="<?php echo $the_author->profile; ?>" title="<?php echo $the_author->name; ?>"><?php echo $the_author->nickname; ?></a>
 	</strong>
 	<?php endif; ?>
 	<span>
@@ -211,7 +212,7 @@ else {
 <div>
 <?php if (!isset($request->params['byid'])) : ?>	
 <div class="tweet_avatar">
-	<a href="<?php echo $the_author->profile_url; ?>">
+	<a href="<?php echo $the_author->profile; ?>">
 	  <img src="<?php echo $the_author->avatar; ?>" height="<?php echo $avsize; ?>" width="<?php echo $avsize; ?>" border="0">
 	</a>
 </div>
@@ -219,7 +220,7 @@ else {
 <div class="tweet_content">
 	<?php if (!isset($request->params['byid'])) : ?>	
 
-		<a href="<?php echo $the_author->profile_url; ?>" title="<?php echo $the_author->name; ?>"><?php echo $the_author->nickname; ?></a>
+		<a href="<?php echo $the_author->profile; ?>" title="<?php echo $the_author->name; ?>"><?php echo $the_author->nickname; ?></a>
 
 
 	<?php endif; ?>
