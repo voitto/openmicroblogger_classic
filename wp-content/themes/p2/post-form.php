@@ -20,6 +20,17 @@ function do_ajax_post(){
   $("#postsubmit").hide();
   $("#busy").html("<img src='<?php base_path(); ?>resource/jeditable/indicator.gif'>");
 	$.post(someurl, submitdata, function(str) {
+	  $("#postlist").prepend(
+	  render_a_tweet({
+	    profile_url:'',
+	    avatar:'',
+	    name:'',
+	    nickname:'',
+	    tweet:submitdata['post[title]'],
+	    link:'',
+	    created:'',
+	    id:''
+	  }));
     $("#posttext").attr("value", '');
 	  $("#postarea").fadeIn("slow");
 	  $("#postsubmit").fadeIn("slow");
