@@ -23,9 +23,9 @@ function do_ajax_post(){
 	  $("#postlist").prepend(
 	  render_a_tweet({
 	    profile_url:'',
-	    avatar:'',
+	    avatar:'<?php $p = get_profile(); echo $p->avatar; ?>',
 	    name:'',
-	    nickname:'',
+	    nickname:'<?php echo $p->nickname; ?>',
 	    tweet:submitdata['post[title]'],
 	    link:'',
 	    created:'',
